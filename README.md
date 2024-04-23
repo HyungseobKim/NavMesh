@@ -1,4 +1,6 @@
 # Navigation Mesh
+<img align="center" src="/ReadmeImages/Screenshot1.png">
+
 ## Partition into monotone pieces
 Triangulating a polygon requires a preceding step, which is partitioning polygon into simpler shapes.
 In this step, we will split the polygon into y-monotone pieces, which means if you walk along the polygon's edges from the highest vertex to the lowest vertex, you never go up, so always go down or horizontally.
@@ -10,6 +12,7 @@ So let's start to look at this algorithm step by step.
 As I mentioned, we will scan all the vertices from the highest one to the lowest one and see what we can do for each vertex.
 The way the partitioning algorithm handles a vertex depends on the type of vertices.
 There are five types of vertices, and here are an example and the definition of them.
+<img align="right" src="/ReadmeImages/VerticesExample.png">
 
 #### Start vertex
 A vertex is a start vertex if they meet both of these conditions:
@@ -44,6 +47,7 @@ Vertices do not satisfy any of other types so far are regular vertices.
 In Figure1, $V_2$ and $V_y$ are regular vertices.
 
 #### Note on labeling
+<img align="right" height="300" src="/ReadmeImages/VertexOrderExample.png">
 Now we know about the types of vertex and need to label them to run the partitioning algorithm.
 If you see the way we classified vertices, you can notice that we will need to compare each vertex with neighbors.
 Therefore, you may want to define a struct of vertex and let them hold the position of the vertex and a way to access neighbors.
@@ -192,11 +196,117 @@ The way to figure out whether the interior of the polygon lies left or right is 
 If the ***previous*** vertex lies ***above*** or the ***next*** vertex lies ***below*** Vi, then the interior of the polygon lies ***right*** to Vi.
 In the opposite case, the interior of the polygon lies ***left*** to Vi.
 
+#### Partitioning Example
+Because this is one most complicated part of this article, I have a detailed example here.
+
+<img align="left" height="300" src="/ReadmeImages/PartitioningExample1.png">
+<br /><br /><br /><br />
+All vertices are in the priority queue.<br />
+There is no intersecting edge yet.<br /><br />
+
+$$Q: \{ V_1, V_2, V_z, V_y, V_x, V_3 \}$$
+
+$$T: Ø$$
+
+<br /><br /><br />
+<img align="left" height="300" src="/ReadmeImages/PartitioningExample2.png">
+
+<br /><br /><br />
+$V_1$ is a start vertex.<br />
+Insert $E_1$ in $T$ and the helper is $V_1$.<br />
+
+$$Q: \{ V_2, V_z, V_y, V_x, V_3 \}$$
+
+$$T: \{ E_1→V_1 \}$$
+
+$E_1$ starts to intersect the scan line.
+
+<br /><br /><br />
+<img align="left" height="300" src="/ReadmeImages/PartitioningExample3.png">
+
+<br />
+$V_2$ is a regular vertex.<br />
+The interior of the polygon lies on the right.<br />
+The helper of $E_1$ is not a merge vertex.<br />
+Delete $E_1$ from $T$.<br />
+Insert $E_2$ in $T$ and the helper is $V_2$.<br />
+
+$$Q: \{ V_z, V_y, V_x, V_3 \}$$
+
+$$T: \{ E_2→V_2 \}$$
+
+$E_1$ ends to intersect the scan line, and $E_2$ starts to intersect the scan line.
+
+<br />
+<img align="left" height="300" src="/ReadmeImages/PartitioningExample4.png">
+
+<br />
+$V_z$ is a split vertex.<br />
+The edge directly left to $V_z$ is $E_2$.<br />
+Insert a diagonal connecting $V_z$ and the helper of $E_2$.<br />
+Set the helper of $E_2$ as $V_z$.<br />
+Insert $E_z$ in $T$ and the helper is $V_z$.<br />
+
+$$Q: \{ V_y, V_x, V_3 \}$$
+
+$$T: \{ E_2→V_2, E_z→V_z \}$$
+
+$E_z$ starts to intersect the scan line.
+
+<br />
+<img align="left" height="300" src="/ReadmeImages/PartitioningExample5.png">
+
+<br /><br /><br />
+$V_y$ is a regular vertex.<br />
+The interior of the polygon does not lie on the right.<br />
+The edge directly left to $V_y$ is $E_2$.<br />
+The helper of $E_2$ is not a merge vertex.<br />
+Set the helper of $E_2$ as $V_y$.<br />
+
+$$Q: \{ V_x, V_3 \}$$
+
+$$T: \{ E_2→V_y, E_z→V_z \}$$
+
+<br />
+<img align="left" height="300" src="/ReadmeImages/PartitioningExample6.png">
+
+<br />
+$V_x$ is a merge vertex.<br />
+The helper of $E_z$ is not a merge vertex.<br />
+Delete $E_z$ from $T$.<br />
+The edge directly left to $V_x$ is $E_2$.<br />
+The helper of $E_2$ is not a merge vertex.<br />
+Set the helper of $E_2$ as $V_x$.<br />
+
+$$Q: \{ V_3 \}$$
+
+$$T: \{ E_2→V_x \}$$
+
+$E_z$ ends to intersect the scan line.
+
+<br />
+<img align="left" height="300" src="/ReadmeImages/PartitioningExample7.png">
+
+<br />
+$V_3$ is an end vertex.<br />
+The helper of $E_2$ is a merge vertex.<br />
+Insert a diagonal connecting $V_3$ and the helper of $E_2$.<br />
+Delete $E_2$ from $T$.<br />
+
+$$Q: Ø$$
+
+$$T: Ø$$
+
+$E_2$ ends to intersect the scan line.<br />
+No more vertices in $Q$, so we have done.<br /><br />
+
 ### Organizing Pieces
 Now we have finished partitioning a polygon into y-monotone pieces, but there is one more step to do to complete partitioning.
 We have done this to triangulate each piece, but we don't have any piece yet.
 What we have are just bunch of edges and diagonals, so we need to construct pieces from them.
 Depends on your implementation, you may not need this step, but I will explain how I organized pieces.
+
+<img align="right" height="300" src="/ReadmeImages/OrganizingPiecesExample.png">
 
 Figure 9 shows the result of partitioning from the example above.
 You can see that there are two pieces, and the only edges they are sharing are diagonals.
@@ -259,6 +369,9 @@ It means the vertex at the top of the stack is already connected to the current 
 For the rest of vertices in the stack, check if a diagonal can be added to the current vertex.
 If it is possible, connect and check the next vertex in the stack. If it is not, close this case.
 
+<img align="left" width="300" src="/ReadmeImages/SameChainExample.png">
+<img align="center" width="300" src="/ReadmeImages/HandleSameChainExample.png">
+
 Figure 2 shows the result of handling the current vertex from Figure 1.
 We could connect three vertices on the stack from the current vertex, so they are popped from the stack.
 However, the fourth vertex could not be connected to the current vertex, so this is where we stop.
@@ -269,6 +382,10 @@ Second, insert the current vertex. If you see Figure 2, you can notice that vert
 The other scenario is when the current vertex and the top vertex of the stack are on the different chain. Figure 3 shows this case.
 Since they are on the different chain and this polygon is y-monotone,
 we can add a new diagonal to all vertices in the stack except the last one which is the highest vertex that is already connected to the current vertex.
+
+<img align="left" width="300" src="/ReadmeImages/DifferentChainExample.png">
+<img align="center" width="300" src="/ReadmeImages/HandleDifferentChainExample.png">
+
 The result of handling Figure 3 is Figure 4.
 Similar to the previous scenario, we need to insert two vertices into the stack; the current vertex and the vertex previously on top of the stack.
 
