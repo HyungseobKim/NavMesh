@@ -21,17 +21,24 @@ To change the shape of the wall, drag a red box on the vertices of a wall.<br />
 
 Below is the exaplantion of the algorithm.
 
-## Partition into monotone pieces
+## Partitioning
+
+<details>
+<summary>Click to show the description.</summary>
+
+### Partition into monotone pieces
+
 Triangulating a polygon requires a preceding step, which is partitioning polygon into simpler shapes.
 In this step, we will split the polygon into y-monotone pieces, which means if you walk along the polygon's edges from the highest vertex to the lowest vertex, you never go up, so always go down or horizontally.
 To achieve it, we will scan the entire polygon from the top to the bottom with a horizontal scan line.
 During a scanning, when each time the scan line meets a vertex, we will check whether a new diagonal can be added.
 So let's start to look at this algorithm step by step.
 
-### Label vertices
+#### Label vertices
 As I mentioned, we will scan all the vertices from the highest one to the lowest one and see what we can do for each vertex.
 The way the partitioning algorithm handles a vertex depends on the type of vertices.
 There are five types of vertices, and here are an example and the definition of them.
+
 <img align="right" src="/ReadmeImages/VerticesExample.png">
 
 ##### Start vertex
@@ -68,6 +75,7 @@ In Figure1, $V_2$ and $V_y$ are regular vertices.
 
 #### Note on labeling
 <img align="right" height="300" src="/ReadmeImages/VertexOrderExample.png">
+
 Now we know about the types of vertex and need to label them to run the partitioning algorithm.
 If you see the way we classified vertices, you can notice that we will need to compare each vertex with neighbors.
 Therefore, you may want to define a struct of vertex and let them hold the position of the vertex and a way to access neighbors.
@@ -366,7 +374,13 @@ Which one should we choose? The answer is the line has the ***smallest*** inner 
 This way, we can ensure that there is no other line between the line from the previous vertex and the line to the next vertex,
 so we can construct a piece successfully.
 
-## Polygon triangulation
+</details>
+
+## Triangulation
+
+<details>
+<summary>Click to show the description.</summary>
+
 Here we will discuss the algorithm that triangulates monotone pieces, so we can generate navigation meshes.
 Since we already divided the polygon into simpler shapes, this algorithm is not so complicated actually.
 Our stratgey is similar to the previous section; scanning each piece from the top to the bottom, vertex by vertex.
@@ -452,3 +466,5 @@ Triangulation (y-monotone piece) {
      construct a triangle using Vn, the last vertex of S, and the previously popped vertex;
 }
 ```
+
+</details>
