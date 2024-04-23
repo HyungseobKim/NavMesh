@@ -32,9 +32,6 @@ You can read the detailed explanation of the algorithms below.
 
 ## Partitioning
 
-<details>
-<summary>Click to show the description.</summary>
-
 ### Partition into monotone pieces
 
 Triangulating a polygon requires a preceding step, which is partitioning polygon into simpler shapes.
@@ -115,7 +112,7 @@ During scanning, we need to find the edge to the left of each vertex.
 Therefore we store the edges intersecting the sweep line in the leaves of a dynamic binary search tree.
 The left-to-right order of the leaves of tree corresponds to the left-to-right order of the edges.
 Because we are only interested in edges to the left of split and merge vertices we only need to store edges in tree that have the interior of polygon to their right.
-See ... if you want to check my implementation of binary search tree.
+See [BinaryTree.h](NavMesh/BinaryTree.h) and [BinaryTree.hpp](NavMesh/BinaryTree.hpp) if you want to check my implementation of binary search tree.
 
 The one more thing that we need to store together with edges is a vertex called "helper" of the edge, which is a possible candidate to be used to build a diagonal.
 Therefore, you may want to define a struct of edges and let them hold two vertices that construct the edge and one "helper" vertex.
@@ -382,8 +379,6 @@ When a vertex has diagonal(s) you have to pick one of them or the edge of the or
 Which one should we choose? The answer is the line has the ***smallest*** inner angle.
 This way, we can ensure that there is no other line between the line from the previous vertex and the line to the next vertex,
 so we can construct a piece successfully.
-
-</details>
 
 ## Triangulation
 
