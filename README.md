@@ -24,7 +24,10 @@ Generating navigation meshes uses Polygon Triangulation algorithm, which has two
 1. Partition the polygon into y-monotone pieces.
 2. Triangulate each piece.
 
-After triangulation has done, A* uses triangles as navigation meshes to find the path between two given points on the polygon.<br />
+After triangulation has done, there is the pathfinding section.
+1. Find the path between two given points on the polygon using A*.
+2. Smooth the path using Funnel Algorithm.
+
 You can read the detailed explanation of the algorithms below.
 
 ## Partitioning
