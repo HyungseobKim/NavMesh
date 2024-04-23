@@ -19,7 +19,13 @@ Click Edit mode in UI.<br />
 To move walls, drag a red box at the center of a wall.<br />
 To change the shape of the wall, drag a red box on the vertices of a wall.<br />
 
-Below is the exaplantion of the algorithm.
+#### Algorithms
+Generating navigation meshes uses Polygon Triangulation algorithm, which has two parts.
+1. Partition the polygon into y-monotone pieces.
+2. Triangulate each piece.
+
+After triangulation has done, A* uses triangles as navigation meshes to find the path between two given points on the polygon.<br />
+You can read the detailed explanation of the algorithms below.
 
 ## Partitioning
 
