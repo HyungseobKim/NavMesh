@@ -1,5 +1,25 @@
 # Navigation Mesh
+Automatic generation of navigation meshes and pathfinding on the meshes.<br />
+It uses a polygon triangulation algorithm to generate navigation meshes and the A* algorithm to find a path.<br />
+
 <img align="center" src="/ReadmeImages/Screenshot1.png">
+
+Used C++, SDL2, OpenGL, and ImGui.<br />
+All source codes are in the NavMesh folder, and the executable is in the Demo folder with libraries.
+
+#### How to use the demo
+Click the left mouse to set the path's starting point.<br />
+Click the right mouse to set the destination of the path.<br />
+You can change the weight of the heuristic for A*.<br />
+You can toggle path smoothing and showing all nodes options.<br />
+You may change colors with the color editor.<br />
+
+#### How to edit the geography in the demo
+Click Edit mode in UI.<br />
+To move walls, drag a red box at the center of a wall.<br />
+To change the shape of the wall, drag a red box on the vertices of a wall.<br />
+
+Below is the exaplantion of the algorithm.
 
 ## Partition into monotone pieces
 Triangulating a polygon requires a preceding step, which is partitioning polygon into simpler shapes.
@@ -14,35 +34,35 @@ The way the partitioning algorithm handles a vertex depends on the type of verti
 There are five types of vertices, and here are an example and the definition of them.
 <img align="right" src="/ReadmeImages/VerticesExample.png">
 
-#### Start vertex
+##### Start vertex
 A vertex is a start vertex if they meet both of these conditions:
 1. Both neighbor vertices lie below this vertex.
 2. The interior angle at this vertex is less than π.
 
 Start vertices are usually at the top of a polygon. In Figure 1, only $V_1$ is a start vertex.
 
-#### Split vertex
+##### Split vertex
 Conditions to be a split vertex is similar to the start vertex.
 1. Both neighbor vertices lie below this vertex.
 2. The interior angle at this vertex is greater than π.
 
 In Figure 1, only $V_z$ is a split vertex.
 
-#### End vertex
+##### End vertex
 You can think end vertex as the opposite of start vertex.
 1. Both neighbor vertices lie above this vertex.
 2. The interior angle at this vertex is less than π.
 
 In Figure 1, only $V_3$ is an end vertex.
 
-#### Merge vertex
+##### Merge vertex
 The relationship between merge vertex and end vertex is similar to the one between split vertex and start vertex.
 1. Both neighbor vertices lie above this vertex.
 2. The interior angle at this vertex is greater than π.
 
 In Figure 1, only $V_x$ is a merge vertex.
 
-#### Regular vertex
+##### Regular vertex
 Vertices do not satisfy any of other types so far are regular vertices.
 In Figure1, $V_2$ and $V_y$ are regular vertices.
 
@@ -51,13 +71,13 @@ In Figure1, $V_2$ and $V_y$ are regular vertices.
 Now we know about the types of vertex and need to label them to run the partitioning algorithm.
 If you see the way we classified vertices, you can notice that we will need to compare each vertex with neighbors.
 Therefore, you may want to define a struct of vertex and let them hold the position of the vertex and a way to access neighbors.
-
+<br /><br />
 One thing you need to beware during finding neighbors is the order of vertices.
 Since the algorithm scans vertices in the counter-clockwise order, you need a way to differentiate two neighbors; previous and next.
 However, the vertices on the hole must be the clockwise order.
 The reason is, actually, the clockwise order on a hole is counter-clockwise to the polygon.
 Let's see an example.
-
+<br /><br />
 If you see Figure 2, there are blue arrows point the same direction, which is from the inside of the polygon to the outside.
 Each red arrow seems to point the opposite directions, but in fact, both of them point the same direction repect to blue arrows.
 If you see the vertices on the hole in the view of the polygon, you can notice that the red arrow is the counter-clockwise order.
