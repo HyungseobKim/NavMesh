@@ -1,3 +1,8 @@
+# Navigation Mesh
+[Main Menu](../README.md)
+<br /><br />
+[Next Chapter - Partitioning](Triangulation.md)
+
 ### Partition into monotone pieces
 
 Triangulating a polygon requires a preceding step, which is partitioning polygon into simpler shapes.
@@ -345,3 +350,5 @@ When a vertex has diagonal(s) you have to pick one of them or the edge of the or
 Which one should we choose? The answer is the line has the ***smallest*** inner angle.
 This way, we can ensure that there is no other line between the line from the previous vertex and the line to the next vertex,
 so we can construct a piece successfully.
+
+[Back to the top](#navigation-mesh)
