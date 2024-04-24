@@ -2,6 +2,8 @@
 [Main Menu](../README.md)
 <br /><br />
 [Prev Chapter - Partitioning](Partitioning.md)
+<br /><br />
+[Next Chapter - Partitioning](Pathfinding.md)
 
 ## Polygon Triangulation
 Here we will discuss the algorithm that triangulates monotone pieces, so we can generate navigation meshes.
@@ -96,4 +98,7 @@ Triangulation (y-monotone piece) {
      construct a triangle using Vn, the last vertex of S, and the previously popped vertex;
 }
 ```
+
+One last thing you should not forget is setting neighbors for each navigation mesh, so you can do pathfinding.
+
 [Back to the top](#navigation-mesh)

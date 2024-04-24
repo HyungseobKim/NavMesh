@@ -37,3 +37,7 @@ You can read the detailed explanation of the algorithms below.
 ### Triangulation
 
 [Description](Description/Triangulation.md)
+
+### Pathfinding
+
+[Description](Description/Pathfinding.md)
