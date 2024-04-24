@@ -3,7 +3,7 @@
 <br /><br />
 [Next Chapter - Partitioning](Triangulation.md)
 
-### Partition into monotone pieces
+## Partition into monotone pieces
 
 Triangulating a polygon requires a preceding step, which is partitioning polygon into simpler shapes.
 In this step, we will split the polygon into y-monotone pieces, which means if you walk along the polygon's edges from the highest vertex to the lowest vertex, you never go up, so always go down or horizontally.
@@ -11,46 +11,46 @@ To achieve it, we will scan the entire polygon from the top to the bottom with a
 During a scanning, when each time the scan line meets a vertex, we will check whether a new diagonal can be added.
 So let's start to look at this algorithm step by step.
 
-#### Label vertices
+### Label vertices
 As I mentioned, we will scan all the vertices from the highest one to the lowest one and see what we can do for each vertex.
 The way the partitioning algorithm handles a vertex depends on the type of vertices.
 There are five types of vertices, and here are an example and the definition of them.
 
 <img align="right" src="/Description/Images/VerticesExample.png">
 
-##### Start vertex
+#### Start vertex
 A vertex is a start vertex if they meet both of these conditions:
 1. Both neighbor vertices lie below this vertex.
 2. The interior angle at this vertex is less than π.
 
 Start vertices are usually at the top of a polygon. In Figure 1, only $V_1$ is a start vertex.
 
-##### Split vertex
+#### Split vertex
 Conditions to be a split vertex is similar to the start vertex.
 1. Both neighbor vertices lie below this vertex.
 2. The interior angle at this vertex is greater than π.
 
 In Figure 1, only $V_z$ is a split vertex.
 
-##### End vertex
+#### End vertex
 You can think end vertex as the opposite of start vertex.
 1. Both neighbor vertices lie above this vertex.
 2. The interior angle at this vertex is less than π.
 
 In Figure 1, only $V_3$ is an end vertex.
 
-##### Merge vertex
+#### Merge vertex
 The relationship between merge vertex and end vertex is similar to the one between split vertex and start vertex.
 1. Both neighbor vertices lie above this vertex.
 2. The interior angle at this vertex is greater than π.
 
 In Figure 1, only $V_x$ is a merge vertex.
 
-##### Regular vertex
+#### Regular vertex
 Vertices do not satisfy any of other types so far are regular vertices.
 In Figure1, $V_2$ and $V_y$ are regular vertices.
 
-#### Note on labeling
+### Note on labeling
 <img align="right" height="300" src="/Description/Images/VertexOrderExample.png">
 
 Now we know about the types of vertex and need to label them to run the partitioning algorithm.
@@ -67,7 +67,7 @@ If you see Figure 2, there are blue arrows point the same direction, which is fr
 Each red arrow seems to point the opposite directions, but in fact, both of them point the same direction repect to blue arrows.
 If you see the vertices on the hole in the view of the polygon, you can notice that the red arrow is the counter-clockwise order.
 
-### Partitioning
+## Partitioning
 Now we can discuss about the partitioning algorithm.
 As I mentioned before, we will scan all vertices from the top to the bottom.
 The goal of sweep is each time the sweep line meets a vertex, by using the vertex, adding a new diagonal that divides the polygon when it is possible.
@@ -88,7 +88,7 @@ See [BinaryTree.h](NavMesh/BinaryTree.h) and [BinaryTree.hpp](NavMesh/BinaryTree
 The one more thing that we need to store together with edges is a vertex called "helper" of the edge, which is a possible candidate to be used to build a diagonal.
 Therefore, you may want to define a struct of edges and let them hold two vertices that construct the edge and one "helper" vertex.
 
-#### Main loop
+### Main loop
 Once you have all vertices in a priority queue and a binary search tree to store edges,
 we can simply handle each vertex until there is no vertex in the queue.
 Here is the pseudo code:
@@ -107,13 +107,13 @@ DividePolygonIntoMonotone (polygon) {
 ```
 As you can see, the main loop is quiet simple. What really important is handling each vertex.
 
-#### Vertex handling
+### Vertex handling
 `HandleVertex` function will check the type of a vertex and call the appropriate handling function.
 There are five types of vertex, and our strategy is to add a new diagonal or to save a candidate that can be used for a diagonal later.
 As I already mentioned before, we will use the concept of "Edge".
 The edge Ei means the edge between two vertices Vi and Vi+1, which is the next vertex of Vi.
 
-##### Start vertex
+#### Start vertex
 By the definition of start vertex, we can know the next vertex lies ***below*** Vi,
 which means the edge Ei ***starts*** to intersect the scan line, so let's ***push*** Ei into the binary tree.
 ```
@@ -122,7 +122,7 @@ HandleStartVertex (Vi) {
     insert Ei into BT;
 }
 ```
-##### End vertex
+#### End vertex
 Opposite to start vertex, we can know the previous vertex lies ***above*** Vi by the definition of end vertex.
 It means the edge from the previous vertex does ***not*** intersect the scan line anymore, so let's ***delete*** Ei-1 from the binary tree.
 The thing we should not forget when we delete an edge is if there is a proper candidate, we should add a diagonal.
@@ -135,7 +135,7 @@ HandleEndVertex (Vi) {
     delete Ei-1 from Bt;
 }
 ```
-##### Split vertex
+#### Split vertex
 Similar to start vertex, we can know the edge Ei ***starts*** to intersect the scan line.
 In addition to that, since the split vertex is where the polygon ***divides***, it is a good point to add a new diagonal.
 ```
@@ -148,7 +148,7 @@ HandleSplitVertex (Vi) {
     insert Ei into BT;
 }
 ```
-##### Merge vertex
+#### Merge vertex
 Similar to end vertex, we can know the edge from the previous vertex does ***not*** intersect the scan line anymore.
 In addition to that, since the merge vertex is where the polygon ***unites***, it is a good point to add a new diagonal.
 However, we haven't met the other vertex that can construct a diagonal, let's add an edge that has Vi as a helper.
@@ -169,7 +169,7 @@ HandleMergeVertex (Vi) {
     set helper of Ej <- Vi;
 }
 ```
-##### Regular vertex
+#### Regular vertex
 Regular vertices are the most complicated vertices to handle.
 If a regular vertex is on the ***left*** side of the polygon, we can know the edge from the previous vertex does ***not*** intersect anymore,
 while the edge to the next vertex ***starts*** to intersect with scan line.
@@ -201,7 +201,7 @@ The way to figure out whether the interior of the polygon lies left or right is 
 If the ***previous*** vertex lies ***above*** or the ***next*** vertex lies ***below*** Vi, then the interior of the polygon lies ***right*** to Vi.
 In the opposite case, the interior of the polygon lies ***left*** to Vi.
 
-#### Partitioning Example
+### Partitioning Example
 Because this is one most complicated part of this article, I have a detailed example here.
 
 <img align="left" height="300" src="/Description/Images/PartitioningExample1.png">
@@ -305,7 +305,7 @@ $$T: Ø$$
 $E_2$ ends to intersect the scan line.<br />
 No more vertices in $Q$, so we have done.<br /><br />
 
-### Organizing Pieces
+## Organizing Pieces
 Now we have finished partitioning a polygon into y-monotone pieces, but there is one more step to do to complete partitioning.
 We have done this to triangulate each piece, but we don't have any piece yet.
 What we have are just bunch of edges and diagonals, so we need to construct pieces from them.
