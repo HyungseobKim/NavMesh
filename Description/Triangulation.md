@@ -1,3 +1,9 @@
+# Navigation Mesh
+[Main Menu](README.md)
+<br /><br />
+[Prev Chapter - Partitioning](Description/Partitioning.md)
+
+## Polygon Triangulation
 Here we will discuss the algorithm that triangulates monotone pieces, so we can generate navigation meshes.
 Since we already divided the polygon into simpler shapes, this algorithm is not so complicated actually.
 Our stratgey is similar to the previous section; scanning each piece from the top to the bottom, vertex by vertex.
@@ -83,3 +89,4 @@ Triangulation (y-monotone piece) {
      construct a triangle using Vn, the last vertex of S, and the previously popped vertex;
 }
 ```
+[Back to the top](#navigation-mesh)
