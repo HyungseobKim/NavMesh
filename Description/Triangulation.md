@@ -1,7 +1,7 @@
 # Navigation Mesh
-[Main Menu](README.md)
+[Main Menu](../README.md)
 <br /><br />
-[Prev Chapter - Partitioning](Description/Partitioning.md)
+[Prev Chapter - Partitioning](Partitioning.md)
 
 ## Polygon Triangulation
 Here we will discuss the algorithm that triangulates monotone pieces, so we can generate navigation meshes.
