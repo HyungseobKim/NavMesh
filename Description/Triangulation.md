@@ -3,7 +3,7 @@
 <br /><br />
 [Prev Chapter - Partitioning](Partitioning.md)
 <br /><br />
-[Next Chapter - Partitioning](Pathfinding.md)
+[Next Chapter - Pathfinding](Pathfinding.md)
 
 ## Polygon Triangulation
 Here we will discuss the algorithm that triangulates monotone pieces, so we can generate navigation meshes.
