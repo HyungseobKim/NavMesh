@@ -31,8 +31,8 @@ You can check this in my demo and code, which is "weight".
 ##### Consistency
 Consistency is a stronger property than admissibility, so if a heuristic is consistent, it is admissible.
 Imagine paths between three points A, B, and C. There are two ways that can go to B from A.
-One is the going directly, and the other one is the going to C and then going to B.
-Let's say $h(x)$ is a heuristic at point x to the destination and $v(x, y)$ is an actual value between x and y.
+One is the going directly, and the other one is going to C and then going to B.
+Let's say $h(x)$ is a heuristic at point $x$ to the destination and $v(x, y)$ is an actual value between $x$ and $y$.
 Then, the heuristic is consistent if $h(A)$ is less or equal than $v(A, C)$ + $h(C)$.
 
 If a heuristic is admissible but not consistent, it still guarantees optimality, but it may visit nodes more than once.
