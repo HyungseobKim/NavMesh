@@ -42,12 +42,12 @@ Rather, it is a brute-force algorithm with bound optimization.
 Luckily, the distance between two points is a consistent heuristic, so we can use it for pathfindings.
 
 ### A* on navigation mesh
-There are not many things to change to use A* on navigation meshes.
+There are not many things that you need to modify A* to use it on navigation meshes.
 The only thing you need to decide is the standard point of each mesh.
 One is the center point of mesh. With this one, you can simply do pathfinding with all center points.
 The actual path will look like going to the center of a mesh first,
 then moving along the center point of adjacent meshes, and moving to the destination point.
-The other point you can use is the center point of each edge, which is I used and will explain here.
+The other point you can use is the center point of each edge, which is I used.
 
 You can see my implementation here: [Astar.h](../NavMesh/Astar.h), [Astar.cpp](../NavMesh/Astar.cpp)
 
