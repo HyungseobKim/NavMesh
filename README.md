@@ -30,14 +30,7 @@ After triangulation has done, there is the pathfinding section.
 
 You can read the detailed explanation of the algorithms below.
 
-### Partitioning
-
-[Description](Description/Partitioning.md)
-
-### Triangulation
-
-[Description](Description/Triangulation.md)
-
-### Pathfinding
-
-[Description](Description/Pathfinding.md)
+1. [Partitioning](Description/Partitioning.md)
+2. [Triangulation](Description/Triangulation.md)
+3. [Pathfinding](Description/Pathfinding.md)
+4. [Conclusion](Description/Conclusion.md)
