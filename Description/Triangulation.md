@@ -101,4 +101,4 @@ Triangulation (y-monotone piece) {
 
 One last thing you should not forget is setting neighbors for each navigation mesh, so you can do pathfinding.
 
-[Back to the top](#navigation-mesh)
+[Back to the top](#navigation-mesh---triangulation)

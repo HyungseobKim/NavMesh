@@ -351,4 +351,4 @@ Which one should we choose? The answer is the line has the ***smallest*** inner 
 This way, we can ensure that there is no other line between the line from the previous vertex and the line to the next vertex,
 so we can construct a piece successfully.
 
-[Back to the top](#navigation-mesh)
+[Back to the top](#navigation-mesh---partitioning)
