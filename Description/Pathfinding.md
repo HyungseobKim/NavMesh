@@ -1,4 +1,4 @@
-# Navigation Mesh
+# Navigation Mesh - Pathfinding
 [Main Menu](../README.md)
 <br /><br />
 [Prev Chapter - Partitioning](Triangulation.md)
@@ -57,19 +57,19 @@ You can read the explanation below or my implementation here: [Astar.h](../NavMe
 
 ```
 Astar (start node, end node, nodes) {
-	priority queue of nodes Q;
-	push end node into Q;
-	
-	while (Q is not empty) {
-	    let current node <- Q.pop;
-		
-		if (current node is start node) {
-		    RestorePath(start node, end node);
-			return;
-		}
-		
-		ProcessNode(current node);
-	}
+    priority queue of nodes Q;
+    push end node into Q;
+    
+    while (Q is not empty) {
+        let current node <- Q.pop;
+        
+        if (current node is start node) {
+            RestorePath(start node, end node);
+            return;
+        }
+        
+        ProcessNode(current node);
+    }
 }
 ```
 The main loop is simple and identical to the common implementation of A*.
@@ -81,33 +81,33 @@ Otherwise, process the node.
 
 ```
 ProcessNode (node to process) {
-	for (each neighbor node adjacent to node to process) {
-		if (neighbor is on the open list) {
-			let distance <- the distance between the origin of neighbor and the origin of node to process;
-			let new given cost <- distance + the given cost of node to process;
-			let new cost <- new given cost + heuristic of neighbor to end node;
-			
-			if (new cost < the cost of neighbor) {
-				set parent of neighbor <- node to process;
-				set origin of neighbor <- the center of the edge that neighbor and node to process shares;
-				set given cost of neighbor <- new given cost;
-				set cost of neighbor <- new cost;
-				
-				decrease key of neighbor inside Q;
-			}
-		}
-		else if (neighbor is not on the closed list) {
-			set status of neighbor <- open list;
-			set parent of neighbor <- node to process;
-			set origin of neighbor <- the center of the edge that neighbor and node to process shares;
-			
-			let distance <- the distance between the origin of neighbor and the origin of node to process
-			set given cost of neighbor <- distance + the given cost of node to process;
-			set cost of neighbor <- given cost of neighbor + heuristic of neighbor to end node;
-		
-			push neighbor into Q;
-		}
-	}
+    for (each neighbor node adjacent to node to process) {
+        if (neighbor is on the open list) {
+            let distance <- the distance between the origin of neighbor and the origin of node to process;
+            let new given cost <- distance + the given cost of node to process;
+            let new cost <- new given cost + heuristic of neighbor to end node;
+            
+            if (new cost < the cost of neighbor) {
+                set parent of neighbor <- node to process;
+                set origin of neighbor <- the center of the edge that neighbor and node to process shares;
+                set given cost of neighbor <- new given cost;
+                set cost of neighbor <- new cost;
+                
+                decrease key of neighbor inside Q;
+            }
+        }
+        else if (neighbor is not on the closed list) {
+            set status of neighbor <- open list;
+            set parent of neighbor <- node to process;
+            set origin of neighbor <- the center of the edge that neighbor and node to process shares;
+            
+            let distance <- the distance between the origin of neighbor and the origin of node to process
+            set given cost of neighbor <- distance + the given cost of node to process;
+            set cost of neighbor <- given cost of neighbor + heuristic of neighbor to end node;
+        
+            push neighbor into Q;
+        }
+    }
 }
 ```
 Processing a node is evaluating the cost of the node and deciding where the node should be.
@@ -140,81 +140,81 @@ The blue lines are left sides of the funnel, the orange lines are right sides of
 
 ```
 FunnelAlgorithm (edges that the path is passing) {
-	
-	collection of points P;
-	
-	collection of vertices L;
-	collection of vertices R;
-	
-	push all left vertex of edges into L;
-	push all right vertex of edges into R;
-	
-	let corner <- starting point of the path;
-	
-	let left index <- 0;
-	let right index <- 0;
-	
-	let portal left <- L[0];
-	let portal right <- R[0];
-	
-	for each (i from 1 to n where n is the number of edges) {
-		let left <- L[i];
-		let right <- R[i];
-		
-		if (right is not portal right AND TriArea(corner, portal right, right) <= 0) {
-			if (corner is portal right OR TriArea(corner, portal left, right) > 0 {
-				set portal right <- right;
-				set right index <- i;
-			}
-			else {
-				set corner <- portal left;
-				push corner into P;
-				
-				set i <- left index;
-				
-				set left index <- left index + 1;
-				set right index <- left index;
-				
-				if (left index > n) return P;
-				
-				set portal left = L[left index];
-				set portal right = R[right index];
-				
-				continue;
-			}
-		}
-		
-		if (left is not portal left AND TriArea(corner, portal left, left) <= 0) {
-			if (corner is portal left OR TriArea(corner, portal right, left) < 0) {
-				portal left = left;
-				left index = i;
-			}
-			else {
-				set corner <- portal right;
-				push corner into P;
-				
-				set i <- right index;
-				
-				set right index <- right index + 1;
-				set left index <- right index;
-				
-				if (left index > n) return P;
-				
-				set portal left = L[left index];
-				set portal right = R[right index];
-			}
-		}
-	}
+    
+    collection of points P;
+    
+    collection of vertices L;
+    collection of vertices R;
+    
+    push all left vertex of edges into L;
+    push all right vertex of edges into R;
+    
+    let corner <- starting point of the path;
+    
+    let left index <- 0;
+    let right index <- 0;
+    
+    let portal left <- L[0];
+    let portal right <- R[0];
+    
+    for each (i from 1 to n where n is the number of edges) {
+        let left <- L[i];
+        let right <- R[i];
+        
+        if (right is not portal right AND TriArea(corner, portal right, right) <= 0) {
+            if (corner is portal right OR TriArea(corner, portal left, right) > 0 {
+                set portal right <- right;
+                set right index <- i;
+            }
+            else {
+                set corner <- portal left;
+                push corner into P;
+                
+                set i <- left index;
+                
+                set left index <- left index + 1;
+                set right index <- left index;
+                
+                if (left index > n) return P;
+                
+                set portal left = L[left index];
+                set portal right = R[right index];
+                
+                continue;
+            }
+        }
+        
+        if (left is not portal left AND TriArea(corner, portal left, left) <= 0) {
+            if (corner is portal left OR TriArea(corner, portal right, left) < 0) {
+                portal left = left;
+                left index = i;
+            }
+            else {
+                set corner <- portal right;
+                push corner into P;
+                
+                set i <- right index;
+                
+                set right index <- right index + 1;
+                set left index <- right index;
+                
+                if (left index > n) return P;
+                
+                set portal left = L[left index];
+                set portal right = R[right index];
+            }
+        }
+    }
 ```
 `TriaArea` is the way I check if one line is going over the other line, which uses cross product.
 Since magnitude of cross product represents the area of parallelogram, we can know their status by checking the sign of the result.
 `TriaArea` function also can be used to determine the left and right vertex of an edge.
 ```
 TriArea (p, p1, p2) {
-	let v1 <- p1 - p;
-	let v2 <- p2 - p;
-	
-	return v2.x * v1.y - v1.x * v2.y;
+    let v1 <- p1 - p;
+    let v2 <- p2 - p;
+    
+    return v2.x * v1.y - v1.x * v2.y;
 }
 ```
 

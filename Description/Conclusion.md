@@ -1,4 +1,4 @@
-# Navigation Mesh
+# Navigation Mesh - Conclusion
 [Main Menu](../README.md)
 <br /><br />
 [Prev Chapter - Pathfinding](Pathfinding.md)
@@ -29,8 +29,8 @@ instead of drawing lines from the starting point to the left and right vertex of
 drawing lines to the points that are apart from the left and right vertex by the size of the agent.
 
 ## References
-[Berg 08] Berg, M. de, O Cheong, M. van Kreveld and M. Overmars. 2008. *Computational Geometry*, 3rd Ed. Berlin: Springer.
-[Snook 00] Greg Snook. 2000. Simplified 3D Movement and Pathfinding Using Navigation Meshes. In *Game Programming Gems 1*, ed. Mark A. DeLoura, 288-304. Charles River Media.
+[Berg 08] Berg, M. de, O Cheong, M. van Kreveld and M. Overmars. 2008. *Computational Geometry*, 3rd Ed. Berlin: Springer.<br />
+[Snook 00] Greg Snook. 2000. Simplified 3D Movement and Pathfinding Using Navigation Meshes. In *Game Programming Gems 1*, ed. Mark A. DeLoura, 288-304. Charles River Media.<br />
 http://digestingduck.blogspot.com/2010/03/simple-stupid-funnel-algorithm.html
 
 [Back to the top](#navigation-mesh)

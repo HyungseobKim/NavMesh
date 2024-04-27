@@ -1,4 +1,4 @@
-# Navigation Mesh
+# Navigation Mesh - Triangulation
 [Main Menu](../README.md)
 <br /><br />
 [Prev Chapter - Partitioning](Partitioning.md)
