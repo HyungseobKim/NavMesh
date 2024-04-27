@@ -140,9 +140,8 @@ The blue lines are left sides of the funnel, the orange lines are right sides of
 
 ```
 FunnelAlgorithm (edges that the path is passing) {
-    
     collection of points P;
-    
+
     collection of vertices L;
     collection of vertices R;
     
@@ -204,6 +203,8 @@ FunnelAlgorithm (edges that the path is passing) {
                 set portal right = R[right index];
             }
         }
+
+    return P;
     }
 ```
 `TriaArea` is the way I check if one line is going over the other line, which uses cross product.
